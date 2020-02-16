@@ -17,15 +17,23 @@ class OrderHandler
     end
 
     def addToOrder(orderId, cake, quantity)
-        @orders[orderId].cart << {cake: cake, quantity: quantity}
-        puts "Added #{cake.to_s} x #{quantity}, to order with id: #{orderId}"
+        if cake
+            @orders[orderId].cart << {cake: cake, quantity: quantity}
+            puts "Added #{cake.to_s} x #{quantity}, to order with id: #{orderId}"
+        else
+            puts "Cake cannot be nil!"
+        end
     end
 
     def payOrder(orderId)
         order = @orders[orderId]
-        order.status = "paid"
-        puts "Order with id: #{orderId} paid."
-        @balanceSheet << order
+        if order.status === "paid"
+            puts "Order is already paid."
+        else
+            order.status = "paid"
+            puts "Order with id: #{orderId} paid."
+            @balanceSheet << order
+        end
     end
 
     def finishOrder(orderId)
