@@ -5,4 +5,8 @@ class Order
         @status = "new"
         @cart = []
     end
+
+    def to_s
+        "Status: #{@status}, Price: #{@price}"
+    end
 end

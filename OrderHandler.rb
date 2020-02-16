@@ -31,7 +31,7 @@ class OrderHandler
             puts "Order is already paid."
         else
             order.status = "paid"
-            puts "Order with id: #{orderId} paid."
+            puts "Order with id: #{orderId} paid. Time to complete: #{calculateTimeToComplete(order)} minutes."
             @balanceSheet << order
         end
     end
@@ -45,14 +45,34 @@ class OrderHandler
         @orders[orderId]
     end
 
+    def viewOrder(orderId)
+        order = @orders[orderId]
+        puts "#{order.to_s} Time to complete: #{calculateTimeToComplete(order)} minutes."
+        displayCart(order.cart)
+    end
+
     def displayBalanceSheet
         finalAmount = 0
         @balanceSheet.each do |order|
-            amount = 0
-            order.cart.each { |x| amount += x[:cake].price.to_f * x[:quantity].to_i }
-            finalAmount += amount
-            puts "#{order.cart.inspect} Amount: #{amount}"
+            puts "Order #{order.id}:" 
+            finalAmount += displayCart(order.cart)
+            puts "========================="
         end
         puts "Final Amount: #{finalAmount}"
+    end
+
+    def calculateTimeToComplete(order)
+        result = 0
+        order.cart.each { |o| result += o[:cake].time_to_complete.to_f * o[:quantity].to_i }
+        result
+    end
+
+    def displayCart(cart)
+        amount = 0
+        cart.each do |x| 
+            amount += x[:cake].price.to_f * x[:quantity].to_i
+            puts "#{x[:cake].name} x#{x[:quantity]} Amount: #{amount}"
+        end
+        amount
     end
 end

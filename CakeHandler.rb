@@ -5,8 +5,8 @@ class CakeHandler
         @cakes = []
     end
     
-    def createCake(name, price, weight, description)
-        if !name || !price || !weight || !description
+    def createCake(name, price, weight, description, timeToComplete)
+        if !name || !price || !weight || !description || !timeToComplete
             puts "Cake cannot have nil arguments!"
         else
             cake = Cake.new
@@ -14,6 +14,7 @@ class CakeHandler
             cake.price = price
             cake.weight = weight
             cake.description = description
+            cake.time_to_complete = timeToComplete
             
             puts cake.to_s
             @cakes << cake
@@ -21,6 +22,7 @@ class CakeHandler
     end 
 
     def getCake(name)
+        puts "Looking for cake with name '#{name}'"
         @cakes.find {|x| x.name == name }
     end
 end

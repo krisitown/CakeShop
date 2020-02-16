@@ -11,7 +11,7 @@ while (line != "quit")
     tokens = tokens[1].split(', ') if tokens[1]
     case command
     when "createCake"
-        cakeHandler.createCake(tokens[0], tokens[1], tokens[2], tokens[3])
+        cakeHandler.createCake(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4])
     when "beginOrder"
         puts "Started order with id: " + orderHandler.beginOrder.to_s
     when "addToOrder"
@@ -23,6 +23,8 @@ while (line != "quit")
         orderHandler.finishOrder(tokens[0].to_i)
     when "balanceSheet"
         orderHandler.displayBalanceSheet
+    when "viewOrder"
+        orderHandler.viewOrder(tokens[0].to_i)
     when "help"
         #todo
     end
