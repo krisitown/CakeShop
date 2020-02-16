@@ -6,19 +6,21 @@ orderHandler = OrderHandler.new
 
 line = gets.chomp
 while (line != "quit")
-    tokens = line.split(', ')
-    case tokens[0]
+    tokens = line.split(': ')
+    command = tokens[0]
+    tokens = tokens[1].split(', ') if tokens[1]
+    case command
     when "createCake"
-        cakeHandler.createCake(tokens[1], tokens[2], tokens[3], tokens[4])
+        cakeHandler.createCake(tokens[0], tokens[1], tokens[2], tokens[3])
     when "beginOrder"
         puts "Started order with id: " + orderHandler.beginOrder.to_s
     when "addToOrder"
-        cake = cakeHandler.getCake(tokens[2])
-        orderHandler.addToOrder(tokens[1].to_i, cake, tokens[3])
+        cake = cakeHandler.getCake(tokens[1])
+        orderHandler.addToOrder(tokens[0].to_i, cake, tokens[2])
     when "payOrder"
-        orderHandler.payOrder(tokens[1].to_i)
+        orderHandler.payOrder(tokens[0].to_i)
     when "finishOrder"
-        orderHandler.finishOrder(tokens[1].to_i)
+        orderHandler.finishOrder(tokens[0].to_i)
     when "balanceSheet"
         orderHandler.displayBalanceSheet
     when "help"
